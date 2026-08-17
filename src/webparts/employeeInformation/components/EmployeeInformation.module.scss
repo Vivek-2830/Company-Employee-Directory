@@ -1,0 +1,396 @@
+// .employeeInformation {
+//   overflow: hidden;
+//   padding: 1em;
+//   color: "[theme:bodyText, default: #323130]";
+//   color: var(--bodyText);
+// }
+
+.companyDirectory {
+  width: 100%;
+  // padding: 18px 32px 38px;
+  background: #ffffff;
+  color: #063f6d;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+// ========================================
+// Header
+// ========================================
+
+.directoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  min-height: 145px;
+}
+
+.headerContent {
+
+  h1 {
+    color: #063f6d;
+    font-size: 46px;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    font-family: 'Manrope', sans-serif;
+  }
+
+  p {
+    margin: 0;
+    color: #424750;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 500;
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: 1.2px;
+  }
+}
+
+.filterContainer {
+  width: 100%;
+  min-height: 106px;
+  margin-top: 22px;
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: minmax(350px, 2.1fr) minmax(180px, 0.85fr);
+  gap: 15px;
+  align-items: center;
+  background: #f5f6f7;
+  border: 1px solid #e9eaec;
+  border-radius: 17px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+//  Search Box Control
+.new-search {
+  height: 35px;
+  padding: 7px 8px;
+  // border: 1px solid #003461;
+  border-radius: 34px;
+  animation: none !important;
+
+  :global(.ms-SearchBox-icon) {
+    color: #003461;
+    font-size: 18px;
+  }
+
+  &:hover {
+    border: 1px solid #003461;
+    border-radius: 34px;
+  }
+
+  &::after {
+    border: 1px solid #003461;
+    border-radius: 34px;
+    height: auto;
+    padding: 7px 8px;
+  }
+}
+
+// DropDown Control 
+
+
+.newDropdown {
+  height: 35px;
+
+  :global(.ms-Dropdown) {
+    border: 1px solid #003461;
+    border-radius: 34px;
+    animation: none !important;
+
+    &:hover {
+      border: 1px solid #003461;
+      border-radius: 34px;
+      outline: none;
+    }
+
+    &::after {
+      content: none !important;
+      // border: none !important;
+      border: 1px solid #003461;
+      box-shadow: none !important;
+    }
+  }
+
+  :global(.ms-Dropdown-title) {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding: 0 35px 0 14px;
+    border: none;
+    border-radius: 34px;
+    color: #003461;
+    background: #ffffff;
+    font-size: 14px;
+  }
+
+  :global(.ms-Dropdown-caretDown) {
+    right: 12px;
+    color: #003461;
+  }
+
+  :global(.ms-Label) {
+    display: none;
+  }
+}
+
+
+// ========================================
+// Responsive
+// ========================================
+
+@media (max-width: 768px) {
+
+  .filterContainer {
+    grid-template-columns: 1fr;
+
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .searchBox,
+  .selectBox {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .filterContainer {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .searchBox {
+    height: 46px;
+
+    :global(.ms-SearchBox) {
+      height: 46px;
+    }
+
+    :global(.ms-SearchBox-field) {
+      height: 46px;
+      font-size: 14px;
+    }
+  }
+
+  .selectBox {
+
+    :global(.ms-Dropdown) {
+      height: 46px;
+    }
+
+    :global(.ms-Dropdown-title) {
+      height: 46px;
+    }
+  }
+}
+
+.employeeGrid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+
+// ========================================
+// Employee Card
+// ========================================
+
+.employeeCard {
+  min-height: 320px;
+  padding: 25px 24px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: #ffffff;
+  border-radius: 8px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 20px rgba(0, 52, 97, 0.08);
+  }
+}
+
+
+// ========================================
+// Employee Image
+// ========================================
+
+.employeeImageWrapper {
+  position: relative;
+
+  width: 94px;
+  height: 94px;
+
+  margin-bottom: 20px;
+}
+
+.employeeImage {
+  display: block;
+
+  width: 94px;
+  height: 94px;
+
+  object-fit: cover;
+
+  border: 4px solid #e9eceb;
+  border-radius: 11px;
+}
+
+
+// ========================================
+// Status
+// ========================================
+
+.statusDot {
+  position: absolute;
+
+  right: -2px;
+  bottom: -2px;
+
+  width: 21px;
+  height: 21px;
+
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+}
+
+.online {
+  background: #1fc66d;
+}
+
+.away {
+  background: #a8b5c7;
+}
+
+
+// ========================================
+// Employee Information
+// ========================================
+
+.employeeInfo {
+  width: 100%;
+
+  text-align: center;
+
+  h3 {
+    margin: 0 0 7px;
+
+    color: #003461;
+
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+}
+
+.employeeRole {
+  margin-bottom: 3px;
+
+  color: #173f60;
+
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.employeeLocation {
+  color: #78899a;
+
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+
+// ========================================
+// Contact
+// ========================================
+
+.employeeContact {
+  width: 100%;
+
+  margin-top: 24px;
+  padding-top: 16px;
+
+  border-top: 1px solid #edf0f2;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+
+  min-height: 32px;
+
+  color: #244968;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  white-space: nowrap;
+
+  & + & {
+    margin-top: 3px;
+  }
+
+  span:last-child {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+}
+
+.contactIcon {
+  width: 30px;
+
+  flex-shrink: 0;
+
+  color: #003461;
+
+  font-size: 17px;
+
+  text-align: center;
+}
+
+
+// ========================================
+// Tablet
+// ========================================
+
+@media (max-width: 1100px) {
+  .employeeGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+
+// ========================================
+// Mobile
+// ========================================
+
+@media (max-width: 600px) {
+  .employeeGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .employeeCard {
+    min-height: 320px;
+  }
+}
