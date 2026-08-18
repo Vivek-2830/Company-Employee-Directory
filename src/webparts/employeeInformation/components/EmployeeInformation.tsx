@@ -97,14 +97,13 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
 
           </div>
 
-          {
-            this.state.EmployeeDetails.length > 0 &&
-            this.state.EmployeeDetails.map((item: any) => {
-              return (
-                <div
-                  className={styles.employeeGrid}
-                  key={item.ID}
-                >
+          <div className={styles.employeeGrid}>
+
+            {
+              this.state.EmployeeDetails.length > 0 &&
+              this.state.EmployeeDetails.map((item: any) => {
+                return (
+
                   <div className={styles.employeeCard}>
 
                     {/* Employee Image */}
@@ -136,8 +135,8 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                       </div>
 
                       <div className={styles.employeeLocation}>
-                        {item.Department}
-                        {item.Department && item.Team ? " • " : ""}
+                        {item.Team}
+                        {item.Designation && item.Team ? " • " : ""}
                         {item.Team}
                       </div>
 
@@ -169,10 +168,10 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                     </div>
 
                   </div>
-                </div>
-              );
-            })
-          }
+                );
+              })
+            }
+          </div>
 
         </section>
 
@@ -194,14 +193,14 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
           "ID",
           "Title",
           "Designation",
-          "Department",
           "Team",
           "MobileNumber",
           "EmailId",
           "DOB",
           "DOJ",
           "LWD",
-          "ReportsTo",
+          "ReportsTo/Id",
+          "ReportsTo/Title",
           "CurrentAddress",
           "PermanentAddress",
           "Gender",
@@ -212,8 +211,9 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
           "ProfilePictureName",
           "SkypeID",
           "Status",
-          "TeamLead"
-        ).expand("ReportsTo" , "TeamLead")();
+          "TeamLead/Id",
+          "TeamLead/Title"
+        ).expand("ReportsTo", "TeamLead")();
 
       console.log("Employee Data:", items);
 
@@ -252,7 +252,6 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
             ID: item.ID || "",
             Title: item.Title || "",
             Designation: item.Designation || "",
-            Department: item.Department || "",
             Team: item.Team || "",
             MobileNumber: item.MobileNumber || "",
             EmailId: item.EmailId || "",
@@ -260,7 +259,8 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
             DOJ: item.DOJ || "",
             LWD: item.LWD || "",
 
-            ReportsTo: item.ReportsTo || "",
+            ReportsToID: item.ReportsTo?.Id || "",
+            ReportsToTitle: item.ReportsTo?.Title || "",
 
             CurrentAddress: item.CurrentAddress || "",
             PermanentAddress: item.PermanentAddress || "",
@@ -273,7 +273,8 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
             SkypeID: item.SkypeID || "",
             Status: item.Status || "",
 
-            TeamLead: item.TeamLead || "",
+            TeamLeadID: item.TeamLead?.Id || "",
+            TeamLeadTitle: item.TeamLead?.Title || "",
 
             // All attachments
             Attachments: info,
@@ -285,7 +286,7 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
       );
 
       this.setState({
-        EmployeeDetails: AllData
+        EmployeeDetails: AllData, AllEmployeeDetails: AllData
       });
 
       console.log("All Employee Details:", AllData);
@@ -332,8 +333,8 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
       let SerchText = Test.toLowerCase();
 
       let filteredData = this.state.AllEmployeeDetails.filter((x: any) => {
-        let ProjectName = x.ProjectName.toLowerCase();
-        let ProjectManager = x.ProjectManager.toLowerCase();
+        let ProjectName = x.Title.toLowerCase();
+        let ProjectManager = x.Team.toLowerCase();
         return (
           ProjectName.includes(SerchText) || ProjectManager.includes(SerchText)
         );

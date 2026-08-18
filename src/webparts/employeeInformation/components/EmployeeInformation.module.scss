@@ -8,7 +8,6 @@
 .companyDirectory {
   width: 100%;
   // padding: 18px 32px 38px;
-  background: #ffffff;
   color: #063f6d;
 
   * {
@@ -93,7 +92,6 @@
 }
 
 // DropDown Control 
-
 
 .newDropdown {
   height: 35px;
@@ -194,7 +192,7 @@
 
 .employeeGrid {
   width: 100%;
-
+  margin-top: 25px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 32px;
@@ -208,22 +206,23 @@
 .employeeCard {
   min-height: 320px;
   padding: 25px 24px 20px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   background: #ffffff;
   border-radius: 8px;
-
+  box-shadow: 0 4px 4px rgba(0, 52, 97, 0.08);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 
   &:hover {
-    transform: translateY(-3px);
-
-    box-shadow: 0 8px 20px rgba(0, 52, 97, 0.08);
+    --tw-bg-opacity: 1;
+    background-color: rgb(211 228 255 / var(--tw-bg-opacity, 1));
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    // box-shadow: 0 8px 20px rgba(0, 52, 97, 0.08);
   }
 }
 
@@ -234,51 +233,19 @@
 
 .employeeImageWrapper {
   position: relative;
-
   width: 94px;
   height: 94px;
-
   margin-bottom: 20px;
 }
 
 .employeeImage {
   display: block;
-
   width: 94px;
   height: 94px;
-
-  object-fit: cover;
-
+  object-fit: contain;
   border: 4px solid #e9eceb;
   border-radius: 11px;
 }
-
-
-// ========================================
-// Status
-// ========================================
-
-.statusDot {
-  position: absolute;
-
-  right: -2px;
-  bottom: -2px;
-
-  width: 21px;
-  height: 21px;
-
-  border: 3px solid #ffffff;
-  border-radius: 50%;
-}
-
-.online {
-  background: #1fc66d;
-}
-
-.away {
-  background: #a8b5c7;
-}
-
 
 // ========================================
 // Employee Information
@@ -393,4 +360,12 @@
   .employeeCard {
     min-height: 320px;
   }
+}
+
+
+// --------------------------------
+
+
+[data-automation-id="CanvasZone"] {
+  background: #f8f9fa !important;
 }
