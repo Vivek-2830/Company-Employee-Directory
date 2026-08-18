@@ -99,78 +99,159 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
 
           <div className={styles.employeeGrid}>
 
-            {
-              this.state.EmployeeDetails.length > 0 &&
+            {this.state.EmployeeDetails.length > 0 &&
               this.state.EmployeeDetails.map((item: any) => {
-                return (
 
+                return (
                   <div className={styles.employeeCard}>
 
-                    {/* Employee Image */}
-                    <div className={styles.employeeImageWrapper}>
-                      {item.ImageUrl ? (
-                        <img
-                          src={item.ImageUrl}
-                          className={styles.employeeImage}
-                          alt={item.Title || "Employee"}
-                        />
-                      ) : (
-                        <div className={styles.employeeInfo}>
-                          {item.Title
-                            ? item.Title.charAt(0).toUpperCase()
-                            : "E"}
+                    <div className={styles.employeeTop}>
+
+                      {/* Employee Image */}
+                      <div className={styles.employeeImageWrapper}>
+
+                        {item.ImageUrl ? (
+                          <img
+                            src={item.ImageUrl}
+                            className={styles.employeeImage}
+                            alt={item.Title || "Employee"}
+                          />
+                        ) : (
+                          <div className={styles.employeeInitial}>
+                            {item.Title
+                              ? item.Title.charAt(0).toUpperCase()
+                              : "E"}
+                          </div>
+                        )}
+
+                      </div>
+
+                      <div className={styles.employeeInfo}>
+
+                        <h3>
+                          {item.Title || "Employee Name"}
+                        </h3>
+
+                        <div className={styles.employeeRole}>
+                          {item.Designation || "Designation"}
                         </div>
-                      )}
-                    </div>
 
-                    {/* Employee Information */}
-                    <div className={styles.employeeInfo}>
+                        <div className={styles.employeeEmail}>
+                          <span className={styles.emailIcon}>
+                            ✉
+                          </span>
 
-                      <h3>
-                        {item.Title}
-                      </h3>
+                          <span>
+                            {item.EmailId || "email@example.com"}
+                          </span>
+                        </div>
 
-                      <div className={styles.employeeRole}>
-                        {item.Designation}
-                      </div>
-
-                      <div className={styles.employeeLocation}>
-                        {item.Team}
-                        {item.Designation && item.Team ? " • " : ""}
-                        {item.Team}
                       </div>
 
                     </div>
 
-                    {/* Employee Contact */}
-                    <div className={styles.employeeContact}>
 
-                      <div className={styles.contactItem}>
-                        <span className={styles.contactIcon}>
-                          ✉
-                        </span>
+                    {/* =========================
+              EMPLOYEE DETAILS
+          ========================= */}
+                    <div className={styles.employeeDetails}>
 
-                        <span>
-                          {item.EmailId}
-                        </span>
-                      </div>
+                      {/* Practice Group */}
+                      <div className={styles.detailRow}>
 
-                      <div className={styles.contactItem}>
-                        <span className={styles.contactIcon}>
+                        <span className={styles.detailIcon}>
                           ♧
                         </span>
 
                         <span>
-                          {item.DOB}
+                          <strong>Practice Group:</strong>{" "}
+                          {item.Team || "-"}
                         </span>
+
                       </div>
+
+
+                      {/* Department */}
+                      <div className={styles.detailRow}>
+
+                        <span className={styles.detailIcon}>
+                          ♙
+                        </span>
+
+                        <span>
+                          <strong>Department:</strong>{" "}
+                          {item.Department || "-"}
+                        </span>
+
+                      </div>
+
+
+                      {/* Paralegal */}
+                      <div className={styles.detailRow}>
+
+                        <span className={styles.detailIcon}>
+                          ♙
+                        </span>
+
+                        <span>
+                          <strong>Paralegal:</strong>{" "}
+                          {item.Paralegal || "test"}
+                        </span>
+
+                      </div>
+
+
+                      {/* Extension */}
+                      <div className={styles.detailRow}>
+
+                        <span className={styles.detailIcon}>
+                          ♧
+                        </span>
+
+                        <span>
+                          <strong>Extension:</strong>{" "}
+                          {item.Extension || "-"}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+
+                    {/* =========================
+              BOTTOM ACTIONS
+          ========================= */}
+                    <div className={styles.employeeActions}>
+
+                      <button
+                        type="button"
+                        title="Send Email"
+                      >
+                        ✉
+                      </button>
+
+                      <button
+                        type="button"
+                        title="Chat"
+                      >
+                        💬
+                      </button>
+
+                      <button
+                        type="button"
+                        title="LinkedIn"
+                      >
+                        in
+                      </button>
 
                     </div>
 
                   </div>
                 );
+
               })
             }
+
           </div>
 
         </section>
