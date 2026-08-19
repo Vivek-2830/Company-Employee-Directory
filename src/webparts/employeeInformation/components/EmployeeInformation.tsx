@@ -81,8 +81,6 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
               <Dropdown
                 className={styles.newDropdown}
                 options={this.state.Teamlist}
-                label="Team"
-                required
                 placeholder="Select Team"
                 selectedKey={this.state.Team}
                 onChange={(event, option) => {
@@ -150,10 +148,6 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
 
                     </div>
 
-
-                    {/* =========================
-              EMPLOYEE DETAILS
-          ========================= */}
                     <div className={styles.employeeDetails}>
 
                       {/* Practice Group */}
@@ -164,8 +158,8 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                         </span>
 
                         <span>
-                          <strong>Practice Group:</strong>{" "}
-                          {item.Team || "-"}
+                          <strong>DOB</strong>{" "}
+                          {item.DOB || "-"}
                         </span>
 
                       </div>
@@ -179,15 +173,15 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                         </span>
 
                         <span>
-                          <strong>Department:</strong>{" "}
-                          {item.Department || "-"}
+                          <strong>Blood Group:</strong>{" "}
+                          {item.BloodGroup || "-"}
                         </span>
 
                       </div>
 
 
                       {/* Paralegal */}
-                      <div className={styles.detailRow}>
+                      {/* <div className={styles.detailRow}>
 
                         <span className={styles.detailIcon}>
                           ♙
@@ -198,11 +192,11 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                           {item.Paralegal || "test"}
                         </span>
 
-                      </div>
+                      </div> */}
 
 
                       {/* Extension */}
-                      <div className={styles.detailRow}>
+                      {/* <div className={styles.detailRow}>
 
                         <span className={styles.detailIcon}>
                           ♧
@@ -213,38 +207,19 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                           {item.Extension || "-"}
                         </span>
 
-                      </div>
+                      </div> */}
 
                     </div>
 
+                    {/* <div className={styles.employeeActions}>
 
-                    {/* =========================
-              BOTTOM ACTIONS
-          ========================= */}
-                    <div className={styles.employeeActions}>
+                      <button type="button" title="Send Email">✉</button>
 
-                      <button
-                        type="button"
-                        title="Send Email"
-                      >
-                        ✉
-                      </button>
+                      <button type="button" title="Chat">💬</button>
 
-                      <button
-                        type="button"
-                        title="Chat"
-                      >
-                        💬
-                      </button>
+                      <button type="button" title="LinkedIn">in</button>
 
-                      <button
-                        type="button"
-                        title="LinkedIn"
-                      >
-                        in
-                      </button>
-
-                    </div>
+                    </div> */}
 
                   </div>
                 );
