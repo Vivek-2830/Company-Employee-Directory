@@ -72,8 +72,8 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
               <SearchBox className={styles['new-search']}
                 type="text"
                 placeholder="Search by name, expertise, or keywords..."
-                onChange={(e: any) => { this.applyVendorFilters(e.target.value); }}
-                onClear={(e: any) => { this.applyVendorFilters(e.target.value); }}
+                onChange={(e: any) => { void this.applyVendorFilters(e.target.value); }}
+                onClear={(e: any) => { void this.applyVendorFilters(e.target.value); }}
               />
             </div>
 
@@ -235,12 +235,12 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
     );
   }
 
-  public async componentDidMount() {
-    this.GetEmployeeDetails();
-    this.getEmployeeData();
+  public async componentDidMount(): Promise<void>  {
+    void this.GetEmployeeDetails();
+    void this.getEmployeeData();
   }
 
-  public async getEmployeeData(): Promise<void> {
+  public async getEmployeeData() {
     try {
       const items = await this.sp.web.lists
         .getByTitle("Employee Information")
@@ -352,7 +352,7 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
     }
   }
 
-  public async GetEmployeeDetails(): Promise<void> {
+  public async GetEmployeeDetails() {
     try {
       const choiceFieldName = "Team";
 
@@ -384,7 +384,7 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
     }
   }
 
-  private async applyVendorFilters(Test: string): Promise<void> {
+  private async applyVendorFilters(Test: string) {
     if (Test) {
       let SerchText = Test.toLowerCase();
 
