@@ -12,9 +12,10 @@ import { IFieldInfo } from "@pnp/sp/fields";
 import { Dropdown, SearchBox } from '@fluentui/react';
 import { IItem, Item } from '@pnp/sp/items';
 import { Attachment, Attachments, IAttachmentInfo } from '@pnp/sp/attachments';
+import moment from 'moment';
 
 export interface IEmployeeInformationState {
-  Teamlist: any;
+  Teamlist: { key: string; text: string }[];
   Team: any;
   EmployeeDetails: any;
   AllEmployeeDetails: any;
@@ -30,9 +31,9 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
 
     this.state = {
       Teamlist: [],
-      Team: [],
-      EmployeeDetails: "",
-      AllEmployeeDetails: ""
+      Team: "",
+      EmployeeDetails: [],
+      AllEmployeeDetails: []
     };
 
     this.sp = spfi().using(SPFx(this.props.context));
@@ -82,13 +83,31 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                 className={styles.newDropdown}
                 options={this.state.Teamlist}
                 placeholder="Select Team"
-                selectedKey={this.state.Team}
+                selectedKey={this.state.Team ? this.state.Team : ""}
                 onChange={(event, option) => {
-                  if (option) {
-                    this.setState({
-                      Team: option.text
-                    });
+
+                  if (!option) { return; }
+
+                  const selectedTeam = option.key as string;
+                  console.log( "Selected Team:", selectedTeam );
+
+                  // All Teams
+                  if (selectedTeam === "ALL") {
+                    this.setState({ Team: "", EmployeeDetails: this.state.AllEmployeeDetails });
+                    return;
                   }
+
+                  // Filter employees
+                  const filteredEmployees =
+                    this.state.AllEmployeeDetails.filter(
+                      (employee: any) => {
+                        const employeeTeam = typeof employee.Team === "object" ? employee.Team?.Value : employee.Team;
+                        return ( employeeTeam === selectedTeam );
+                      }
+                    );
+
+                  console.log("Filtered Employees:", filteredEmployees);
+                  this.setState({ Team: selectedTeam, EmployeeDetails: filteredEmployees});
                 }}
               />
             </div>
@@ -101,7 +120,7 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
               this.state.EmployeeDetails.map((item: any) => {
 
                 return (
-                  <div className={styles.employeeCard}>
+                  <div className={styles.employeeCard} key={item.ID}>
 
                     <div className={styles.employeeTop}>
 
@@ -109,16 +128,10 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                       <div className={styles.employeeImageWrapper}>
 
                         {item.ImageUrl ? (
-                          <img
-                            src={item.ImageUrl}
-                            className={styles.employeeImage}
-                            alt={item.Title || "Employee"}
-                          />
+                          <img src={item.ImageUrl} className={styles.employeeImage} alt={item.Title || "Employee"} />
                         ) : (
                           <div className={styles.employeeInitial}>
-                            {item.Title
-                              ? item.Title.charAt(0).toUpperCase()
-                              : "E"}
+                            {item.Title ? item.Title.charAt(0).toUpperCase() : "E"}
                           </div>
                         )}
 
@@ -126,22 +139,11 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
 
                       <div className={styles.employeeInfo}>
 
-                        <h3>
-                          {item.Title || "Employee Name"}
-                        </h3>
-
-                        <div className={styles.employeeRole}>
-                          {item.Designation || "Designation"}
-                        </div>
-
+                        <h3>{item.Title || "Employee Name"}</h3>
+                        <div className={styles.employeeRole}>{item.Designation || "Designation"}</div>
                         <div className={styles.employeeEmail}>
-                          <span className={styles.emailIcon}>
-                            ✉
-                          </span>
-
-                          <span>
-                            {item.EmailId || "email@example.com"}
-                          </span>
+                          <span className={styles.emailIcon}>✉</span>
+                          <span> {item.EmailId || "email@example.com"} </span>
                         </div>
 
                       </div>
@@ -152,73 +154,34 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
 
                       {/* Practice Group */}
                       <div className={styles.detailRow}>
-
-                        <span className={styles.detailIcon}>
-                          ♧
-                        </span>
-
-                        <span>
-                          <strong>DOB</strong>{" "}
-                          {item.DOB || "-"}
-                        </span>
-
+                        <span className={styles.detailIcon}>♧</span>
+                        <span><strong>DOB</strong>{" "}{moment(item.DOB).format("DD/MM/YYYY") || "-"}</span>
                       </div>
-
 
                       {/* Department */}
                       <div className={styles.detailRow}>
-
-                        <span className={styles.detailIcon}>
-                          ♙
-                        </span>
-
-                        <span>
-                          <strong>Blood Group:</strong>{" "}
-                          {item.BloodGroup || "-"}
-                        </span>
-
+                        <span className={styles.detailIcon}>♙</span>
+                        <span><strong>Blood Group:</strong>{" "} {item.BloodGroup || "-"}</span>
                       </div>
-
 
                       {/* Paralegal */}
                       {/* <div className={styles.detailRow}>
-
-                        <span className={styles.detailIcon}>
-                          ♙
-                        </span>
-
-                        <span>
-                          <strong>Paralegal:</strong>{" "}
-                          {item.Paralegal || "test"}
-                        </span>
-
+                        <span className={styles.detailIcon}>♙</span>
+                        <span><strong>Paralegal:</strong>{" "}{item.Paralegal || "test"}</span>
                       </div> */}
-
 
                       {/* Extension */}
                       {/* <div className={styles.detailRow}>
-
-                        <span className={styles.detailIcon}>
-                          ♧
-                        </span>
-
-                        <span>
-                          <strong>Extension:</strong>{" "}
-                          {item.Extension || "-"}
-                        </span>
-
+                        <span className={styles.detailIcon}>♧</span>
+                        <span><strong>Extension:</strong>{" "}{item.Extension || "-"}</span>
                       </div> */}
 
                     </div>
 
                     {/* <div className={styles.employeeActions}>
-
                       <button type="button" title="Send Email">✉</button>
-
                       <button type="button" title="Chat">💬</button>
-
                       <button type="button" title="LinkedIn">in</button>
-
                     </div> */}
 
                   </div>
@@ -235,17 +198,126 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
     );
   }
 
-  public async componentDidMount(): Promise<void>  {
-    void this.GetEmployeeDetails();
-    void this.getEmployeeData();
+  public async componentDidMount(): Promise<void> {
+    await this.GetEmployeeDetails();
+    await this.getEmployeeData();
   }
+
+  // public async getEmployeeData() {
+  //   try {
+  //     const items = await this.sp.web.lists
+  //       .getByTitle("Employee Information")
+  //       .items
+  //       .select(
+  //         "ID",
+  //         "Title",
+  //         "Designation",
+  //         "Team",
+  //         "MobileNumber",
+  //         "EmailId",
+  //         "DOB",
+  //         "DOJ",
+  //         "LWD",
+  //         "ReportsTo/Id",
+  //         "ReportsTo/Title",
+  //         "CurrentAddress",
+  //         "PermanentAddress",
+  //         "Gender",
+  //         "MaritalStatus",
+  //         "BloodGroup",
+  //         "PersonalEmail",
+  //         "EmployeeNumber",
+  //         "ProfilePictureName",
+  //         "SkypeID",
+  //         "Status",
+  //         "TeamLead/Id",
+  //         "TeamLead/Title"
+  //       ).expand("ReportsTo", "TeamLead")();
+
+  //     console.log("Employee Data:", items);
+
+  //     const AllData = await Promise.all(
+  //       items.map(async (item: any) => {
+
+  //         let info: IAttachmentInfo[] = [];
+
+  //         // Get attachments for current employee
+  //         try {
+  //           info = await this.sp.web.lists
+  //             .getByTitle("Employee Information")
+  //             .items
+  //             .getById(item.ID)
+  //             .attachmentFiles();
+
+  //           console.log(
+  //             `Attachments for Employee ID ${item.ID}:`,
+  //             info
+  //           );
+
+  //         } catch (attachmentError) {
+  //           console.error(
+  //             `Error fetching attachments for employee ID ${item.ID}:`,
+  //             attachmentError
+  //           );
+  //         }
+
+  //         // Get first attachment as employee image
+  //         const ImageUrl =
+  //           info.length > 0
+  //             ? info[0].ServerRelativeUrl
+  //             : "";
+
+  //         return {
+  //           ID: item.ID || "",
+  //           Title: item.Title || "",
+  //           Designation: item.Designation || "",
+  //           Team: item.Team || "",
+  //           MobileNumber: item.MobileNumber || "",
+  //           EmailId: item.EmailId || "",
+  //           DOB: item.DOB || "",
+  //           DOJ: item.DOJ || "",
+  //           LWD: item.LWD || "",
+
+  //           ReportsToID: item.ReportsTo?.Id || "",
+  //           ReportsToTitle: item.ReportsTo?.Title || "",
+
+  //           CurrentAddress: item.CurrentAddress || "",
+  //           PermanentAddress: item.PermanentAddress || "",
+  //           Gender: item.Gender || "",
+  //           MaritalStatus: item.MaritalStatus || "",
+  //           BloodGroup: item.BloodGroup || "",
+  //           PersonalEmail: item.PersonalEmail || "",
+  //           EmployeeNumber: item.EmployeeNumber || "",
+  //           ProfilePictureName: item.ProfilePictureName || "",
+  //           SkypeID: item.SkypeID || "",
+  //           Status: item.Status || "",
+
+  //           TeamLeadID: item.TeamLead?.Id || "",
+  //           TeamLeadTitle: item.TeamLead?.Title || "",
+
+  //           // All attachments
+  //           Attachments: info,
+
+  //           // First attachment used as profile image
+  //           ImageUrl: ImageUrl
+  //         };
+  //       })
+  //     );
+
+  //     this.setState({
+  //       EmployeeDetails: AllData, AllEmployeeDetails: AllData
+  //     });
+
+  //     console.log("All Employee Details:", AllData);
+
+  //   } catch (error) {
+  //     console.error("Error fetching employee data:", error);
+  //   }
+  // }
 
   public async getEmployeeData() {
     try {
-      const items = await this.sp.web.lists
-        .getByTitle("Employee Information")
-        .items
-        .select(
+      const items = await this.sp.web.lists.getByTitle("Employee Information").items.select(
           "ID",
           "Title",
           "Designation",
@@ -269,55 +341,44 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
           "Status",
           "TeamLead/Id",
           "TeamLead/Title"
-        ).expand("ReportsTo", "TeamLead")();
+      ).expand("ReportsTo", "TeamLead")();
 
       console.log("Employee Data:", items);
 
       const AllData = await Promise.all(
+
         items.map(async (item: any) => {
 
           let info: IAttachmentInfo[] = [];
 
-          // Get attachments for current employee
+          // Get attachments
           try {
-            info = await this.sp.web.lists
-              .getByTitle("Employee Information")
-              .items
-              .getById(item.ID)
-              .attachmentFiles();
 
-            console.log(
-              `Attachments for Employee ID ${item.ID}:`,
-              info
-            );
+            info = await this.sp.web.lists.getByTitle("Employee Information").items.getById(item.ID).attachmentFiles();
+            console.log(`Attachments for Employee ID ${item.ID}:`,info);
 
           } catch (attachmentError) {
-            console.error(
-              `Error fetching attachments for employee ID ${item.ID}:`,
-              attachmentError
-            );
+            console.error(`Error fetching attachments for employee ID ${item.ID}:`, attachmentError );
           }
 
-          // Get first attachment as employee image
-          const ImageUrl =
-            info.length > 0
-              ? info[0].ServerRelativeUrl
-              : "";
+          // First attachment
+          const ImageUrl = info.length > 0 ? info[0].ServerRelativeUrl : "";
+
+          // Team value
+          const TeamValue = typeof item.Team === "object" ? item.Team?.Value || "" : item.Team || "";
 
           return {
             ID: item.ID || "",
             Title: item.Title || "",
             Designation: item.Designation || "",
-            Team: item.Team || "",
+            Team: TeamValue,
             MobileNumber: item.MobileNumber || "",
             EmailId: item.EmailId || "",
             DOB: item.DOB || "",
             DOJ: item.DOJ || "",
             LWD: item.LWD || "",
-
             ReportsToID: item.ReportsTo?.Id || "",
             ReportsToTitle: item.ReportsTo?.Title || "",
-
             CurrentAddress: item.CurrentAddress || "",
             PermanentAddress: item.PermanentAddress || "",
             Gender: item.Gender || "",
@@ -328,55 +389,39 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
             ProfilePictureName: item.ProfilePictureName || "",
             SkypeID: item.SkypeID || "",
             Status: item.Status || "",
-
             TeamLeadID: item.TeamLead?.Id || "",
             TeamLeadTitle: item.TeamLead?.Title || "",
-
-            // All attachments
             Attachments: info,
-
-            // First attachment used as profile image
             ImageUrl: ImageUrl
           };
         })
       );
 
-      this.setState({
-        EmployeeDetails: AllData, AllEmployeeDetails: AllData
-      });
-
+      this.setState({ EmployeeDetails: AllData, AllEmployeeDetails: AllData });
       console.log("All Employee Details:", AllData);
 
     } catch (error) {
-      console.error("Error fetching employee data:", error);
+      console.error( "Error fetching employee data:", error);
     }
   }
 
   public async GetEmployeeDetails() {
     try {
-      const choiceFieldName = "Team";
 
-      const field1: IFieldInfo = await this.sp.web.lists
-        .getByTitle("Employee Information")
-        .fields
-        .getByInternalNameOrTitle(choiceFieldName)();
+      const field1: IFieldInfo = await this.sp.web.lists.getByTitle("Employee Information").fields.getByInternalNameOrTitle("Team")();
 
-      const Teamlist: { key: number; text: string }[] = [];
+      const Teamlist: { key: string; text: string }[] = [];
 
-      if (field1.Choices) {
-        field1.Choices.forEach((dname: string, i: number) => {
-          Teamlist.push({
-            key: i,
-            text: dname
-          });
+      // Add All Teams option
+      Teamlist.push({ key: "ALL", text: "All Teams"});
+
+      if (field1.Choices && field1.Choices.length > 0) {
+        field1.Choices.forEach((team: string) => {
+          Teamlist.push({ key: team, text: team });
         });
       }
 
-      this.setState({
-        Teamlist: Teamlist
-      });
-
-      console.log("Field Details:", field1);
+      this.setState({ Teamlist: Teamlist });
       console.log("Team List:", Teamlist);
 
     } catch (error) {
