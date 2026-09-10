@@ -192,11 +192,11 @@
 
 
 .employeeGrid {
-  width: 83%;
-  margin-top: 25px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 25px;
+  width: 74%;
 }
 
 .employeeCard {
@@ -206,7 +206,7 @@
   background: #ffffff;
   border: 1px solid #e9edf3;
   border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(32, 48, 72, 0.08);
+  // box-shadow: 0 2px 8px rgba(32, 48, 72, 0.08);
   overflow: hidden;
   transition: all 0.2s ease;
 
@@ -221,9 +221,10 @@
 ========================================= */
 
 .employeeTop {
-  display: flex;
   align-items: flex-start;
-  padding: 18px 18px 12px;
+  display: flex;
+  gap: 3px;
+  padding: 17px 17px 0;
 }
 
 /* =========================================
@@ -266,7 +267,7 @@
 
 .employeeInfo {
   // padding-left: 5px;
-  padding-top: 5px;
+  padding-top: 9px;
   max-width: 190px;
   flex: 1;
 
@@ -302,13 +303,13 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 16px;
   color: #424750;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 190px;
+  // max-width: 190px;
 }
 
 .emailIcon {
@@ -322,14 +323,14 @@
 ========================================= */
 
 .employeeDetails {
-  padding: 5px 20px 60px;
+  padding: 0px 27px 13px;
 }
 
 .detailRow {
   display: flex;
   align-items: center;
   min-height: 30px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
   color: #536078;
 

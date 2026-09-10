@@ -55,7 +55,7 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
           <div className={styles.directoryHeader}>
 
             <div className={styles.headerContent}>
-              <h1>Company Directory</h1>
+              <h1>Employee Directory</h1>
 
               <p>
                 Connect with our global talent across every Team. Discover expertise,
@@ -138,30 +138,31 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                       </div>
 
                       <div className={styles.employeeInfo}>
-
                         <h3>{item.Title || "Employee Name"}</h3>
                         <div className={styles.employeeRole}>{item.Designation || "Designation"}</div>
-                        <div className={styles.employeeEmail}>
-                          <span className={styles.emailIcon}>✉</span>
-                          <span> {item.EmailId || "email@example.com"} </span>
-                        </div>
-
                       </div>
 
                     </div>
 
                     <div className={styles.employeeDetails}>
 
+                      <div className={styles.detailRow}>
+                        <div className={styles.employeeEmail}>
+                          {/* <span className={styles.emailIcon}></span> */}
+                          <span><strong>Email :</strong> {item.EmailId || "email@example.com"} </span>
+                        </div>
+                      </div>
+
                       {/* Practice Group */}
                       <div className={styles.detailRow}>
-                        <span className={styles.detailIcon}>♧</span>
-                        <span><strong>DOB</strong>{" "}{moment(item.DOB).format("DD/MM/YYYY") || "-"}</span>
+                        {/* <span className={styles.detailIcon}>♧</span> */}
+                        <span><strong>DOB :</strong>{" "}{moment(item.DOB).format("DD/MM/YYYY") || "-"}</span>
                       </div>
 
                       {/* Department */}
                       <div className={styles.detailRow}>
-                        <span className={styles.detailIcon}>♙</span>
-                        <span><strong>Blood Group:</strong>{" "} {item.BloodGroup || "-"}</span>
+                        {/* <span className={styles.detailIcon}>♙</span> */}
+                        <span><strong>Blood Group :</strong>{" "} {item.BloodGroup || "-"}</span>
                       </div>
 
                       {/* Paralegal */}
