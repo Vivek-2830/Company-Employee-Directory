@@ -30,23 +30,23 @@
 .headerContent {
 
   h1 {
-    color: #063f6d;
+    color: #348ed8;
     font-size: 46px;
     font-weight: 600;
     letter-spacing: -1.5px;
     line-height: 1.1;
-    margin: 0 0 10px;
+    margin: 0 0 17px;
     font-family: 'Manrope', sans-serif;
   }
 
   p {
     margin: 0;
     color: #424750;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.6;
     font-weight: 500;
     font-family: 'Manrope', sans-serif;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.0px;
   }
 }
 
@@ -233,18 +233,19 @@
 
 .employeeImageWrapper {
   position: relative;
-  flex: 0 0 88px;
+  flex: 0 0 75px;
   // width: 88px;
-  height: 88px;
+  height: 77px;
+  margin-left: 5px;
 }
 
 .employeeImage {
   display: block;
-  width: 72px;
-  height: 72px;
+  width: 60px;
+  height: 60px;
   object-fit: scale-down;
   border-radius: 50%;
-  border: 1px solid #d1d1d1;
+  // border: 1px solid #d1d1d1;
 }
 
 .employeeInitial {
@@ -276,7 +277,7 @@
     font-size: 17px;
     line-height: 20px;
     font-weight: 700;
-    color: #003461;
+    color: #348ed8;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

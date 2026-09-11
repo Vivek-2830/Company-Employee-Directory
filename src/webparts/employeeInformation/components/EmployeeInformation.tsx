@@ -149,6 +149,13 @@ export default class EmployeeInformation extends React.Component<IEmployeeInform
                       <div className={styles.detailRow}>
                         <div className={styles.employeeEmail}>
                           {/* <span className={styles.emailIcon}></span> */}
+                          <span><strong>Department :</strong> {item.Department || "Department"} </span>
+                        </div>
+                      </div>
+
+                      <div className={styles.detailRow}>
+                        <div className={styles.employeeEmail}>
+                          {/* <span className={styles.emailIcon}></span> */}
                           <span><strong>Email :</strong> {item.EmailId || "email@example.com"} </span>
                         </div>
                       </div>
